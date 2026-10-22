@@ -1,0 +1,19 @@
+{
+  "name": "BioGenius AI - AI Biology Learning",
+  "short_name": "BioGenius AI",
+  "description": "AI-powered biology learning platform with interactive chapters, quizzes, and AI tutor.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "0ea5e9",
+  "background_color": "0f172a",
+  "categories": ["education", "science"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
