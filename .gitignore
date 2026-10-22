@@ -2,3 +2,4 @@ node_modules/
 dist/
 .env
 .v3/
+.bolt/
