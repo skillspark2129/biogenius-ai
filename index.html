@@ -16,8 +16,8 @@
 textarea,input{width:100%;background:#252525;border:1px solid #333;border-radius:12px;padding:12px;color:white;font-size:15px}
 .btn{width:100%;background:linear-gradient(90deg,#ff6b00,#ff9500);border:none;color:white;padding:14px;border-radius:12px;font-weight:bold;font-size:16px;margin-top:10px;cursor:pointer}
 .btn2{background:#2a2a2a;border:1px solid #444;margin-top:8px}
-.result{margin-top:14px;background:#111;border-radius:12px;overflow:hidden;display:none;border:1px solid #333}
-.result img,.result video{width:100%;display:block}
+.result{margin-top:14px;background:#111;border-radius:12px;overflow:hidden;display:block;border:1px solid #333}
+.result img,.result video{width:100%;display:block;min-height:200px;background:#222}
 .result .txt{padding:12px;font-size:14px;line-height:1.6;white-space:pre-wrap}
 .hidden{display:none}
 .badge{display:inline-block;background:#ff6b0020;color:#ff6b00;padding:2px 8px;border-radius:10px;font-size:11px;margin-bottom:8px}
@@ -35,51 +35,17 @@ textarea,input{width:100%;background:#252525;border:1px solid #333;border-radius
 <div class="container">
 <div id="tab0" class="tab">
 <div class="card">
-<span class="badge">TOOL 1 - LOCKED CHOTU</span>
+<span class="badge">TOOL 1 - FIXED VIDEO</span>
 <h3>Chotu Video Maker</h3>
-<textarea id="vPrompt" rows="2" placeholder="Chotu eating biryani"></textarea>
+<textarea id="vPrompt" rows="2" placeholder="Choto eating biryani"></textarea>
 <button class="btn" onclick="genVideo()">Generate Chotu Video</button>
-<div id="vResult" class="result"><video id="vVideo" controls autoplay loop muted></video><div class="txt" id="vTxt"></div></div>
+<div id="vResult" class="result"><video id="vVideo" controls autoplay loop playsinline></video><div class="txt" id="vTxt">Click Generate to see Chotu!</div></div>
 </div>
 </div>
-<div id="tab1" class="tab hidden">
-<div class="card">
-<span class="badge">TOOL 2 - AI IMAGE</span>
-<h3>Chotu Image Generator</h3>
-<textarea id="iPrompt" rows="2" placeholder="Chotu as superhero"></textarea>
-<button class="btn" onclick="genImage()">Generate Image</button>
-<div id="iResult" class="result"><img id="iImg"><div class="txt" id="iTxt"></div></div>
-</div>
-</div>
-<div id="tab2" class="tab hidden">
-<div class="card">
-<span class="badge">TOOL 3 - AI STORY</span>
-<h3>Chotu Story Writer</h3>
-<input id="sPrompt" placeholder="Topic: Chotu goes to school">
-<button class="btn" onclick="genStory()">Generate Story</button>
-<div id="sResult" class="result"><div class="txt" id="sTxt"></div></div>
-</div>
-</div>
-<div id="tab3" class="tab hidden">
-<div class="card">
-<span class="badge">TOOL 4 - AI VOICE</span>
-<h3>Chotu Voice Maker</h3>
-<textarea id="voPrompt" rows="2" placeholder="Assalamualaikum main Chotu hun"></textarea>
-<button class="btn" onclick="genVoice()">Speak in Chotu Voice</button>
-<button class="btn btn2" onclick="stopVoice()">Stop</button>
-<div id="voResult" class="result" style="display:block"><div class="txt">Chotu ki awaz me suno!</div></div>
-</div>
-</div>
-<div id="tab4" class="tab hidden">
-<div class="card">
-<span class="badge">TOOL 5 - MEME MAKER</span>
-<h3>Chotu Meme Generator</h3>
-<input id="mTop" placeholder="Top text">
-<input id="mBottom" placeholder="Bottom text" style="margin-top:8px">
-<button class="btn" onclick="genMeme()">Generate Meme</button>
-<div id="mResult" class="result"><canvas id="mCanvas" style="width:100%"></canvas></div>
-</div>
-</div>
+<div id="tab1" class="tab hidden"><div class="card"><span class="badge">TOOL 2 - AI IMAGE</span><h3>Chotu Image Generator</h3><textarea id="iPrompt" rows="2" placeholder="Chotu as superhero"></textarea><button class="btn" onclick="genImage()">Generate Image</button><div id="iResult" class="result"><img id="iImg"><div class="txt" id="iTxt"></div></div></div></div>
+<div id="tab2" class="tab hidden"><div class="card"><span class="badge">TOOL 3 - AI STORY</span><h3>Chotu Story Writer</h3><input id="sPrompt" placeholder="Topic: Chotu goes to school"><button class="btn" onclick="genStory()">Generate Story</button><div id="sResult" class="result"><div class="txt" id="sTxt"></div></div></div></div>
+<div id="tab3" class="tab hidden"><div class="card"><span class="badge">TOOL 4 - AI VOICE</span><h3>Chotu Voice Maker</h3><textarea id="voPrompt" rows="2" placeholder="Assalamualaikum main Chotu hun"></textarea><button class="btn" onclick="genVoice()">Speak in Chotu Voice</button><button class="btn btn2" onclick="stopVoice()">Stop</button><div id="voResult" class="result"><div class="txt">Chotu ki awaz me suno!</div></div></div></div>
+<div id="tab4" class="tab hidden"><div class="card"><span class="badge">TOOL 5 - MEME MAKER</span><h3>Chotu Meme Generator</h3><input id="mTop" placeholder="Top text"><input id="mBottom" placeholder="Bottom text" style="margin-top:8px"><button class="btn" onclick="genMeme()">Generate Meme</button><div id="mResult" class="result"><canvas id="mCanvas" style="width:100%"></canvas></div></div></div>
 </div>
 <script>
 function showTab(n){
@@ -87,12 +53,17 @@ document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
 document.getElementById('tab'+n).classList.remove('hidden');
 document.querySelectorAll('.nav button').forEach((b,i)=>b.classList.toggle('active',i==n));
 }
-const VIDEOS=["https://videos.pexels.com/video-files/18069234/18069234-uhd_1440_1440_24fps.mp4","https://videos.pexels.com/video-files/3209211/3209211-uhd_2560_1440_25fps.mp4","https://videos.pexels.com/video-files/4962235/4962235-uhd_2560_1440_25fps.mp4"];
+const VIDEOS=[
+"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+];
 function genVideo(){
 const p=document.getElementById('vPrompt').value||'Chotu dancing';
-document.getElementById('vResult').style.display='block';
-document.getElementById('vVideo').src=VIDEOS[Math.floor(Math.random()*VIDEOS.length)];
-document.getElementById('vTxt').innerText='Prompt: '+p+' - Same Chotu Locked';
+const v=document.getElementById('vVideo');
+v.src=VIDEOS[Math.floor(Math.random()*VIDEOS.length)];
+v.load(); v.play();
+document.getElementById('vTxt').innerText='Prompt: '+p+' - Chotu Video Playing!';
 }
 function genImage(){
 const p=document.getElementById('iPrompt').value||'cute pakistani boy';
@@ -106,11 +77,8 @@ const t=document.getElementById('sPrompt').value||'Chotu adventure';
 const s=`Chotu ki Kahani: ${t}...
 
 Ek dafa Chotu subah utha, laal topi pehni aur bola "Aaj to kamaal hoga!"
-
 ${t} ke din Chotu ne aisa kaam kiya ke sab has pare!
-
 Gaon wale kehte hain Chotu chota hai par kaam bade karta hai!
-
 Moral: Khush raho Chotu ki tarah!`;
 document.getElementById('sResult').style.display='block';
 document.getElementById('sTxt').innerText=s;
