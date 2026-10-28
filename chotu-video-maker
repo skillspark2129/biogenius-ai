@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chotu Video Maker</title>
+<style>
+body{font-family:sans-serif;background:#FFF7ED;margin:0;padding:20px;text-align:center}
+.box{max-width:700px;margin:auto;background:white;padding:20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+h1{color:#FF6B00} input{width:90%;padding:14px;border:2px solid #FF6B00;border-radius:10px;font-size:16px}
+button{background:#FF6B00;color:white;border:none;padding:14px 28px;border-radius:10px;font-size:18px;margin-top:15px;font-weight:bold}
+video{width:100%;border-radius:12px;margin-top:15px}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>🤪 Chotu Video Maker</h1>
+<input id="q" placeholder="Chotu eating biryani and dancing">
+<br><button onclick="go()">🎬 Generate Video</button>
+<div id="s" style="margin-top:15px;color:#666"></div>
+<div id="r"></div>
+</div>
+<script>
+const KEY="58283578-e26d6e3986e53be1c89e2f9ee";
+async function go(){
+ const query=document.getElementById('q').value;
+ document.getElementById('s').innerText="Searching...";
+ const url=`https://pixabay.com/api/videos/?key=${KEY}&q=${encodeURIComponent(query)}&per_page=6`;
+ const res=await fetch(url);
+ const data=await res.json();
+ document.getElementById('s').innerText=`Found ${data.hits.length} videos`;
+ document.getElementById('r').innerHTML=data.hits.map(h=>`<video controls autoplay muted loop src="${h.videos.medium.url}"></video><br><a href="${h.videos.medium.url}" download><button>Download</button></a>`).join("<br><br>");
+}
+</script>
+</body>
+</html>
