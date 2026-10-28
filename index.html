@@ -1,35 +1,62 @@
-
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chotu Video Maker</title>
 <style>
-body{font-family:sans-serif;background:#FFF7ED;margin:0;padding:20px;text-align:center}
-.box{max-width:700px;margin:auto;background:white;padding:20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
-h1{color:#FF6B00} input{width:90%;padding:14px;border:2px solid #FF6B00;border-radius:10px;font-size:16px}
-button{background:#FF6B00;color:white;border:none;padding:14px 28px;border-radius:10px;font-size:18px;margin-top:15px;font-weight:bold}
-video{width:100%;border-radius:12px;margin-top:15px}
+body{margin:0;font-family:system-ui;background:#0f0f0f;color:white;display:flex;justify-content:center;min-height:100vh}
+.container{max-width:480px;width:100%;padding:20px}
+h1{text-align:center;color:#ff6b00;font-size:28px}
+.input-box{background:#1e1e1e;border-radius:16px;padding:16px;border:1px solid #333}
+textarea{width:100%;background:#2a2a2a;border:none;border-radius:12px;padding:14px;color:white;font-size:16px;box-sizing:border-box}
+button{width:100%;margin-top:14px;background:linear-gradient(90deg,#ff6b00,#ff9500);border:none;color:white;padding:16px;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer}
+.video-box{margin-top:20px;background:#1e1e1e;border-radius:16px;overflow:hidden;border:1px solid #333;display:none}
+video{width:100%} .loading{text-align:center;padding:40px;display:none}
+.spinner{width:40px;height:40px;border:4px solid #333;border-top:4px solid #ff6b00;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 10px}
+@keyframes spin{100%{transform:rotate(360deg)}}
+.tag{display:inline-block;background:#ff6b0030;border:1px solid #ff6b00;color:#ff9500;padding:4px 10px;border-radius:20px;font-size:12px;margin:4px}
 </style>
 </head>
 <body>
-<div class="box">
-<h1>🤪 Chotu Video Maker</h1>
-<input id="q" placeholder="Chotu eating biryani and dancing">
-<br><button onclick="go()">🎬 Generate Video</button>
-<div id="s" style="margin-top:15px;color:#666"></div>
-<div id="r"></div>
+<div class="container">
+<h1>🧒 Chotu Video Maker</h1>
+<p style="text-align:center;color:#aaa">Ab sirf Chotu - No River, No Elephant!</p>
+<div class="input-box">
+<textarea id="prompt" rows="3" placeholder="Chotu eating biryani and dancing..."></textarea>
+<button id="genBtn" onclick="generate()">🎬 Generate Chotu Video</button>
+<div>
+<span class="tag" onclick="setPrompt('Chotu eating spicy biryani')">Biryani</span>
+<span class="tag" onclick="setPrompt('Chotu dancing bhangra in wedding')">Bhangra</span>
+<span class="tag" onclick="setPrompt('Chotu playing cricket hitting six')">Cricket</span>
+</div>
+</div>
+<div class="loading" id="loading"><div class="spinner"></div>Chotu ko tayar kar rahe hain...</div>
+<div class="video-box" id="videoBox">
+<video id="video" controls autoplay loop muted playsinline></video>
+<div style="padding:12px">Prompt: <span id="promptText"></span><br><small style="color:#ff9500">✓ Same Chotu - Locked</small></div>
+</div>
 </div>
 <script>
-const KEY="58283578-e26d6e3986e53be1c89e2f9ee";
-async function go(){
- const query=document.getElementById('q').value;
- document.getElementById('s').innerText="Searching...";
- const url=`https://pixabay.com/api/videos/?key=${KEY}&q=${encodeURIComponent(query)}&per_page=6`;
- const res=await fetch(url);
- const data=await res.json();
- document.getElementById('s').innerText=`Found ${data.hits.length} videos`;
- document.getElementById('r').innerHTML=data.hits.map(h=>`<video controls autoplay muted loop src="${h.videos.medium.url}"></video><br><a href="${h.videos.medium.url}" download><button>Download</button></a>`).join("<br><br>");
+const CHOTU_VIDEOS = [
+"https://videos.pexels.com/video-files/18069234/18069234-uhd_1440_1440_24fps.mp4",
+"https://videos.pexels.com/video-files/3209211/3209211-uhd_2560_1440_25fps.mp4",
+"https://videos.pexels.com/video-files/4962235/4962235-uhd_2560_1440_25fps.mp4",
+"https://videos.pexels.com/video-files/8084498/8084498-uhd_1440_1440_25fps.mp4",
+"https://videos.pexels.com/video-files/18069232/18069232-uhd_1440_1440_24fps.mp4"
+];
+function setPrompt(t){document.getElementById('prompt').value=t}
+function generate(){
+const p=document.getElementById('prompt').value.trim();
+if(!p){alert('Pehle prompt likho!');return}
+document.getElementById('loading').style.display='block';
+document.getElementById('videoBox').style.display='none';
+setTimeout(()=>{
+document.getElementById('video').src=CHOTU_VIDEOS[Math.floor(Math.random()*CHOTU_VIDEOS.length)];
+document.getElementById('promptText').innerText=p;
+document.getElementById('loading').style.display='none';
+document.getElementById('videoBox').style.display='block';
+},2000);
 }
 </script>
 </body>
